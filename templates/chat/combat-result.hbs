@@ -1,0 +1,177 @@
+<div class="fe-combat-card">
+  <div class="fe-combat-header">
+    <div class="fe-combatant-left">
+      {{#if attacker.img}}
+      <img src="{{attacker.img}}" alt="{{attacker.name}}" class="fe-token-portrait" />
+      {{/if}}
+    </div>
+    <span class="fe-vs">VS</span>
+    <div class="fe-combatant-right">
+      {{#if defender.img}}
+      <img src="{{defender.img}}" alt="{{defender.name}}" class="fe-token-portrait" />
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="fe-combat-body">
+    {{#each rounds}}
+    <div class="fe-round {{this.disposition}} {{#if this.isCrit}}fe-critical{{/if}}">
+      <div class="fe-round-number">
+        {{#if (eq this.roundType 'attack')}}
+          1st Attack
+        {{else if (eq this.roundType 'counter')}}
+          Counter Attack
+        {{else if (eq this.roundType 'double')}}
+          Follow-up Attack
+        {{else if (eq this.roundType 'brave')}}
+          Brave Attack
+        {{else}}
+          Attack
+        {{/if}}
+      </div>
+      
+      <div class="fe-round-header">
+        <div class="fe-round-combatant">
+          {{#if this.attackerImg}}
+          <img src="{{this.attackerImg}}" alt="{{this.attacker}}" class="fe-round-portrait" title="{{this.attacker}}" />
+          {{else}}
+          <strong class="fe-attacker-label">{{this.attacker}}</strong>
+          {{/if}}
+        </div>
+        <span class="fe-arrow">→</span>
+        <div class="fe-round-combatant">
+          {{#if this.defenderImg}}
+          <img src="{{this.defenderImg}}" alt="{{this.defender}}" class="fe-round-portrait" title="{{this.defender}}" />
+          {{else}}
+          <strong class="fe-defender-label">{{this.defender}}</strong>
+          {{/if}}
+        </div>
+        <span class="fe-weapon">
+          {{this.weapon}}
+          {{#if this.weaponUses}}
+          <span class="fe-weapon-uses">({{this.weaponUsesAfter}}/{{this.weaponMaxUses}})</span>
+          {{/if}}
+        </span>
+      </div>
+      
+      <div class="fe-roll-result">
+        <div class="fe-hit-roll">
+          <span class="fe-roll-label">Hit</span>
+          <span class="fe-roll-die {{#if this.didHit}}fe-success{{else}}fe-fail{{/if}}">{{this.hitRoll}}</span>
+          <span class="fe-roll-target">vs {{this.hitChance}}%</span>
+        </div>
+        
+        {{#if this.didHit}}
+          {{#if this.isCrit}}
+          <div class="fe-damage-roll fe-crit">
+            <span class="fe-crit-label">CRITICAL</span>
+            <span class="fe-damage-value">{{this.damage}}</span>
+          </div>
+          {{else}}
+          <div class="fe-damage-roll">
+            <span class="fe-damage-label">Damage</span>
+            <span class="fe-damage-value">{{this.damage}}</span>
+          </div>
+          {{/if}}
+        {{else}}
+        <div class="fe-miss">Miss</div>
+        {{/if}}
+      </div>
+      
+      {{!-- HP después de este ataque --}}
+      <div class="fe-round-hp-summary">
+        <div class="fe-round-hp">
+          <span class="fe-round-hp-name">{{../attacker.name}}</span>
+          <span class="fe-round-hp-change">
+            <span class="fe-round-hp-before">{{this.attackerHPBefore}}</span>
+            <span class="fe-round-hp-arrow">→</span>
+            <span class="fe-round-hp-after {{#if (eq this.attackerHPAfter 0)}}fe-defeated{{/if}}">{{this.attackerHPAfter}}</span>
+          </span>
+        </div>
+        <div class="fe-round-hp">
+          <span class="fe-round-hp-name">{{../defender.name}}</span>
+          <span class="fe-round-hp-change">
+            <span class="fe-round-hp-before">{{this.defenderHPBefore}}</span>
+            <span class="fe-round-hp-arrow">→</span>
+            <span class="fe-round-hp-after {{#if (eq this.defenderHPAfter 0)}}fe-defeated{{/if}}">{{this.defenderHPAfter}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="fe-combat-footer">
+    <div class="fe-summary-grid">
+      <!-- Atacante -->
+      <div class="fe-summary-combatant {{attacker.disposition}}">
+        <div class="fe-combatant-label">Attacker</div>
+        {{#if attacker.img}}
+        <img src="{{attacker.img}}" alt="{{attacker.name}}" class="fe-summary-portrait" />
+        {{/if}}
+        <div class="fe-summary-name">{{attacker.name}}</div>
+        <div class="fe-summary-stat">
+          <span class="fe-stat-label">HP</span>
+          <span class="fe-stat-value">
+            {{attackerHPStart}} → {{attackerHPEnd}}
+            {{#if attackerDamageTaken}}
+            <span class="fe-damage-taken">(-{{attackerDamageTaken}})</span>
+            {{/if}}
+          </span>
+        </div>
+        {{#if attacker.weapon}}
+        <div class="fe-summary-stat">
+          <span class="fe-stat-label">Weapon</span>
+          <span class="fe-stat-value">
+            {{attacker.weapon}}
+            {{#if attacker.weaponUsesAfter}}
+            <span class="fe-weapon-durability">({{attacker.weaponUsesAfter}}/{{attacker.weaponMaxUses}})</span>
+            {{/if}}
+            {{#if attacker.weaponUsesUsed}}
+            <span class="fe-uses-used">(-{{attacker.weaponUsesUsed}})</span>
+            {{/if}}
+          </span>
+        </div>
+        {{/if}}
+      </div>
+      
+      <!-- Defensor -->
+      <div class="fe-summary-combatant {{defender.disposition}}">
+        <div class="fe-combatant-label">Defender</div>
+        {{#if defender.img}}
+        <img src="{{defender.img}}" alt="{{defender.name}}" class="fe-summary-portrait" />
+        {{/if}}
+        <div class="fe-summary-name">{{defender.name}}</div>
+        <div class="fe-summary-stat">
+          <span class="fe-stat-label">HP</span>
+          <span class="fe-stat-value">
+            {{defenderHPStart}} → {{defenderHPEnd}}
+            {{#if defenderDamageTaken}}
+            <span class="fe-damage-taken">(-{{defenderDamageTaken}})</span>
+            {{/if}}
+          </span>
+        </div>
+        {{#if defender.weapon}}
+        <div class="fe-summary-stat">
+          <span class="fe-stat-label">Weapon</span>
+          <span class="fe-stat-value">
+            {{defender.weapon}}
+            {{#if defender.weaponUsesAfter}}
+            <span class="fe-weapon-durability">({{defender.weaponUsesAfter}}/{{defender.weaponMaxUses}})</span>
+            {{/if}}
+            {{#if defender.weaponUsesUsed}}
+            <span class="fe-uses-used">(-{{defender.weaponUsesUsed}})</span>
+            {{/if}}
+          </span>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    
+    {{#if winner}}
+    <div class="fe-winner">
+      <strong>{{winner}}</strong> wins!
+    </div>
+    {{/if}}
+  </div>
+</div>

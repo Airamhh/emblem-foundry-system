@@ -1,0 +1,62 @@
+{
+  "id": "emblem",
+  "title": "Emblem Tabletop System",
+  "version": "0.1.0-alpha",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Community Contributors",
+      "flags": {}
+    }
+  ],
+  "description": "A tactical RPG system inspired by classic strategy games. Fan-made, non-profit, open source project based on Dylan B.'s TTRPG manual.",
+  "url": "",
+  "license": "LICENSE",
+  "readme": "README.md",
+  "bugs": "",
+  "changelog": "",
+  "media": [],
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "enemy": {},
+      "npc": {},
+      "boss": {}
+    },
+    "Item": {
+      "weapon": {},
+      "skill": {},
+      "class": {},
+      "item": {}
+    }
+  },
+  "esmodules": ["emblem.mjs"],
+  "styles": [
+    "styles/emblem.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    }
+  ],
+  "packs": [],
+  "packFolders": [],
+  "grid": {
+    "type": 1,
+    "distance": 1,
+    "units": "sq"
+  },
+  "initiative": "1d20",
+  "primaryTokenAttribute": "hp",
+  "secondaryTokenAttribute": null
+}

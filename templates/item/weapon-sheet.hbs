@@ -1,0 +1,94 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Weapon Name"/>
+      </h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    
+    {{!-- Weapon Type --}}
+    <div class="form-group">
+      <label>{{localize "EMBLEM.WeaponType"}}</label>
+      <select name="system.weaponType">
+        {{{selectOptions weaponTypes selected=system.weaponType localize=true}}}
+      </select>
+    </div>
+
+    {{!-- Weapon Stats --}}
+    <div class="stats-grid">
+      <div class="stat-block">
+        <label>{{localize "EMBLEM.Might"}}</label>
+        <input type="number" name="system.might" value="{{system.might}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>{{localize "EMBLEM.Hit"}}</label>
+        <input type="number" name="system.hit" value="{{system.hit}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>{{localize "EMBLEM.Crit"}}</label>
+        <input type="number" name="system.crit" value="{{system.crit}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>{{localize "EMBLEM.Weight"}}</label>
+        <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>{{localize "EMBLEM.Range"}}</label>
+        <input type="text" name="system.range" value="{{system.range}}"/>
+      </div>
+      <div class="stat-block">
+        <label>{{localize "EMBLEM.Rank"}}</label>
+        <select name="system.rank">
+          {{{selectOptions rankOptions selected=system.rank}}}
+        </select>
+      </div>
+    </div>
+
+    {{!-- Durability --}}
+    <div class="form-group">
+      <label>{{localize "EMBLEM.Uses"}}</label>
+      <div class="flex-row">
+        <input type="number" name="system.uses" value="{{system.uses}}" data-dtype="Number" style="width: 60px;"/>
+        <span> / </span>
+        <input type="number" name="system.usesMax" value="{{system.usesMax}}" data-dtype="Number" style="width: 60px;"/>
+        <span style="margin-left: 10px;">({{system.usesPercent}}%)</span>
+      </div>
+    </div>
+
+    {{!-- Magic Type (for tomes) --}}
+    {{#if (eq system.weaponType "tome")}}
+    <div class="form-group">
+      <label>Magic Type</label>
+      <select name="system.magicType">
+        {{{selectOptions magicTypes selected=system.magicType}}}
+      </select>
+    </div>
+    {{/if}}
+
+    {{!-- Effective Against --}}
+    <div class="form-group">
+      <label>Effective Against</label>
+      <div class="flex-col">
+        <label><input type="checkbox" name="system.effective" value="cavalry" {{checked (includes system.effective "cavalry")}}/> Cavalry</label>
+        <label><input type="checkbox" name="system.effective" value="flying" {{checked (includes system.effective "flying")}}/> Flying</label>
+        <label><input type="checkbox" name="system.effective" value="armored" {{checked (includes system.effective "armored")}}/> Armored</label>
+        <label><input type="checkbox" name="system.effective" value="dragon" {{checked (includes system.effective "dragon")}}/> Dragon</label>
+        <label><input type="checkbox" name="system.effective" value="monster" {{checked (includes system.effective "monster")}}/> Monster</label>
+      </div>
+    </div>
+
+    {{!-- Description --}}
+    <div class="form-group">
+      <label>{{localize "EMBLEM.Description"}}</label>
+      {{editor enrichedDescription target="system.description" button=true owner=owner editable=editable}}
+    </div>
+
+  </section>
+</form>

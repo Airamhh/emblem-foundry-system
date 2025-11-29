@@ -1,0 +1,118 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+      </h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    
+    {{!-- Item Type --}}
+    <div class="form-group">
+      <label>Item Type</label>
+      <select name="system.itemType">
+        {{#select system.itemType}}
+        <option value="consumable">Consumable</option>
+        <option value="key">Key Item</option>
+        <option value="treasure">Treasure</option>
+        <option value="promotion">Promotion Item</option>
+        {{/select}}
+      </select>
+    </div>
+
+    {{!-- Uses --}}
+    <div class="form-group">
+      <label>Uses</label>
+      <div class="flex-row">
+        <input type="number" name="system.uses" value="{{system.uses}}" data-dtype="Number" style="width: 60px;"/>
+        <span> / </span>
+        <input type="number" name="system.usesMax" value="{{system.usesMax}}" data-dtype="Number" style="width: 60px;"/>
+        <span style="margin-left: 10px;">({{system.usesPercent}}%)</span>
+      </div>
+    </div>
+
+    {{!-- Value --}}
+    <div class="form-group">
+      <label>Value (Gold)</label>
+      <input type="number" name="system.value" value="{{system.value}}" data-dtype="Number"/>
+    </div>
+
+    {{!-- Promotion Class (if promotion item) --}}
+    {{#if (eq system.itemType "promotion")}}
+    <div class="form-group">
+      <label>Promotes To Class</label>
+      <input type="text" name="system.promotionClass" value="{{system.promotionClass}}" placeholder="Class name"/>
+    </div>
+    {{/if}}
+
+    {{!-- Effects --}}
+    <h3>Effects</h3>
+    
+    <div class="flex-row">
+      <div class="form-group" style="flex: 1;">
+        <label>Heal HP</label>
+        <input type="number" name="system.effects.healHP" value="{{system.effects.healHP}}" data-dtype="Number"/>
+      </div>
+      <div class="form-group" style="flex: 1;">
+        <label>Heal %</label>
+        <input type="number" name="system.effects.healPercent" value="{{system.effects.healPercent}}" data-dtype="Number"/>
+      </div>
+    </div>
+
+    <h4>Permanent Stat Boosts</h4>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <label>HP</label>
+        <input type="number" name="system.effects.boostHP" value="{{system.effects.boostHP}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Str</label>
+        <input type="number" name="system.effects.boostStr" value="{{system.effects.boostStr}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Mag</label>
+        <input type="number" name="system.effects.boostMag" value="{{system.effects.boostMag}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Skl</label>
+        <input type="number" name="system.effects.boostSkl" value="{{system.effects.boostSkl}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Spd</label>
+        <input type="number" name="system.effects.boostSpd" value="{{system.effects.boostSpd}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Lck</label>
+        <input type="number" name="system.effects.boostLck" value="{{system.effects.boostLck}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Def</label>
+        <input type="number" name="system.effects.boostDef" value="{{system.effects.boostDef}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Res</label>
+        <input type="number" name="system.effects.boostRes" value="{{system.effects.boostRes}}" data-dtype="Number"/>
+      </div>
+    </div>
+
+    <h4>Status Effects</h4>
+    <div class="flex-col">
+      <label><input type="checkbox" name="system.effects.curePoison" {{checked system.effects.curePoison}}/> Cure Poison</label>
+      <label><input type="checkbox" name="system.effects.cureAll" {{checked system.effects.cureAll}}/> Cure All Status</label>
+      <label><input type="checkbox" name="system.effects.revive" {{checked system.effects.revive}}/> Revive (restore from 0 HP)</label>
+    </div>
+
+    {{!-- Description --}}
+    <div class="form-group">
+      <label>{{localize "EMBLEM.Description"}}</label>
+      {{editor enrichedDescription target="system.description" button=true owner=owner editable=editable}}
+    </div>
+
+  </section>
+</form>

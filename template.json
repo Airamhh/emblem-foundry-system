@@ -1,0 +1,117 @@
+{
+  "Actor": {
+    "types": ["character", "enemy", "npc", "boss"],
+    "templates": {
+      "base": {
+        "stats": {
+          "hp": {
+            "value": 20,
+            "max": 20
+          },
+          "str": {
+            "value": 5
+          },
+          "mag": {
+            "value": 5
+          },
+          "dex": {
+            "value": 5
+          },
+          "spd": {
+            "value": 5
+          },
+          "lck": {
+            "value": 5
+          },
+          "def": {
+            "value": 5
+          },
+          "res": {
+            "value": 5
+          },
+          "mov": {
+            "value": 5
+          },
+          "con": {
+            "value": 5
+          }
+        },
+        "level": {
+          "value": 1
+        },
+        "biography": ""
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "class": "",
+      "exp": 0,
+      "supports": []
+    },
+    "enemy": {
+      "templates": ["base"],
+      "class": "",
+      "difficulty": "normal"
+    },
+    "npc": {
+      "templates": ["base"],
+      "class": "",
+      "faction": ""
+    },
+    "boss": {
+      "templates": ["base"],
+      "class": "",
+      "difficulty": "boss",
+      "specialAbilities": []
+    }
+  },
+  "Item": {
+    "types": ["weapon", "skill", "class", "item"],
+    "templates": {
+      "base": {
+        "description": "",
+        "weight": 0
+      }
+    },
+    "weapon": {
+      "templates": ["base"],
+      "weaponType": "sword",
+      "might": 5,
+      "hit": 80,
+      "crit": 0,
+      "range": "1",
+      "uses": 45,
+      "usesMax": 45,
+      "equipped": false,
+      "rank": "E"
+    },
+    "skill": {
+      "templates": ["base"],
+      "skillType": "combat",
+      "effect": "",
+      "activationCondition": ""
+    },
+    "class": {
+      "templates": ["base"],
+      "tier": 1,
+      "promotesTo": [],
+      "statGrowths": {
+        "hp": 0,
+        "str": 0,
+        "mag": 0,
+        "dex": 0,
+        "spd": 0,
+        "lck": 0,
+        "def": 0,
+        "res": 0
+      },
+      "weaponProficiency": []
+    },
+    "item": {
+      "templates": ["base"],
+      "itemType": "consumable",
+      "effect": "",
+      "quantity": 1
+    }
+  }
+}

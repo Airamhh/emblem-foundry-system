@@ -1,0 +1,111 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Skill Name"/>
+      </h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    
+    {{!-- Skill Type --}}
+    <div class="form-group">
+      <label>Skill Type</label>
+      <select name="system.skillType">
+        {{#select system.skillType}}
+        <option value="passive">Passive</option>
+        <option value="trigger">Trigger</option>
+        <option value="command">Command</option>
+        <option value="support">Support</option>
+        {{/select}}
+      </select>
+    </div>
+
+    {{!-- Activation --}}
+    <div class="flex-row">
+      <div class="form-group" style="flex: 1;">
+        <label>Activation Chance (%)</label>
+        <input type="number" name="system.activationChance" value="{{system.activationChance}}" data-dtype="Number"/>
+      </div>
+      <div class="form-group" style="flex: 2;">
+        <label>Activation Formula</label>
+        <input type="text" name="system.activationFormula" value="{{system.activationFormula}}" placeholder="e.g., Skill%"/>
+      </div>
+    </div>
+
+    {{!-- Effects --}}
+    <h3>Effects</h3>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <label>Hit Mod</label>
+        <input type="number" name="system.effects.hitMod" value="{{system.effects.hitMod}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Avoid Mod</label>
+        <input type="number" name="system.effects.avoidMod" value="{{system.effects.avoidMod}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Crit Mod</label>
+        <input type="number" name="system.effects.critMod" value="{{system.effects.critMod}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Damage Mod</label>
+        <input type="number" name="system.effects.damageMod" value="{{system.effects.damageMod}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Ignore Def (%)</label>
+        <input type="number" name="system.effects.ignoreDefense" value="{{system.effects.ignoreDefense}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Ignore Res (%)</label>
+        <input type="number" name="system.effects.ignoreResistance" value="{{system.effects.ignoreResistance}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Heal %</label>
+        <input type="number" name="system.effects.healPercent" value="{{system.effects.healPercent}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Damage %</label>
+        <input type="number" name="system.effects.damagePercent" value="{{system.effects.damagePercent}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Multi-Hit</label>
+        <input type="number" name="system.effects.multiHit" value="{{system.effects.multiHit}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Hit Power %</label>
+        <input type="number" name="system.effects.multiHitPowerMod" value="{{system.effects.multiHitPowerMod}}" data-dtype="Number"/>
+      </div>
+    </div>
+
+    {{!-- Conditions --}}
+    <h3>Activation Conditions</h3>
+    <div class="flex-col">
+      <div class="flex-row">
+        <label style="flex: 1;">HP Threshold (%)</label>
+        <input type="number" name="system.conditions.hpThreshold" value="{{system.conditions.hpThreshold}}" data-dtype="Number" style="width: 80px;"/>
+        <label style="margin-left: 10px;">
+          <input type="checkbox" name="system.conditions.hpAbove" {{checked system.conditions.hpAbove}}/>
+          Above (unchecked = below)
+        </label>
+      </div>
+      
+      <label><input type="checkbox" name="system.conditions.attackingOnly" {{checked system.conditions.attackingOnly}}/> Only when attacking</label>
+      <label><input type="checkbox" name="system.conditions.defendingOnly" {{checked system.conditions.defendingOnly}}/> Only when defending</label>
+      <label><input type="checkbox" name="system.conditions.adjacentAlly" {{checked system.conditions.adjacentAlly}}/> Requires adjacent ally</label>
+      <label><input type="checkbox" name="system.conditions.adjacentEnemy" {{checked system.conditions.adjacentEnemy}}/> Requires adjacent enemy</label>
+    </div>
+
+    {{!-- Description --}}
+    <div class="form-group">
+      <label>{{localize "EMBLEM.Description"}}</label>
+      {{editor enrichedDescription target="system.description" button=true owner=owner editable=editable}}
+    </div>
+
+  </section>
+</form>

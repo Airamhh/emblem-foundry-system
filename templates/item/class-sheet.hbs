@@ -1,0 +1,184 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Class Name"/>
+      </h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    
+    {{!-- Class Type --}}
+    <div class="form-group">
+      <label>Class Type</label>
+      <select name="system.classType">
+        {{#select system.classType}}
+        <option value="infantry">Infantry</option>
+        <option value="cavalry">Cavalry</option>
+        <option value="flying">Flying</option>
+        <option value="armored">Armored</option>
+        <option value="magic">Magic</option>
+        {{/select}}
+      </select>
+    </div>
+
+    {{!-- Promotion Info --}}
+    <div class="flex-row">
+      <div class="form-group" style="flex: 1;">
+        <label>Promotion Level</label>
+        <input type="number" name="system.promotionLevel" value="{{system.promotionLevel}}" data-dtype="Number"/>
+      </div>
+      <div class="form-group" style="flex: 1;">
+        <label>Promoted Class</label>
+        <input type="checkbox" name="system.promotedClass" {{checked system.promotedClass}}/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Promotes To</label>
+      <input type="text" name="system.promotesTo" value="{{system.promotesTo}}" placeholder="Class name"/>
+    </div>
+
+    {{!-- Stat Bonuses --}}
+    <h3>Stat Bonuses</h3>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <label>HP</label>
+        <input type="number" name="system.statBonuses.hp" value="{{system.statBonuses.hp}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Str</label>
+        <input type="number" name="system.statBonuses.str" value="{{system.statBonuses.str}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Mag</label>
+        <input type="number" name="system.statBonuses.mag" value="{{system.statBonuses.mag}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Skl</label>
+        <input type="number" name="system.statBonuses.skl" value="{{system.statBonuses.skl}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Spd</label>
+        <input type="number" name="system.statBonuses.spd" value="{{system.statBonuses.spd}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Lck</label>
+        <input type="number" name="system.statBonuses.lck" value="{{system.statBonuses.lck}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Def</label>
+        <input type="number" name="system.statBonuses.def" value="{{system.statBonuses.def}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Res</label>
+        <input type="number" name="system.statBonuses.res" value="{{system.statBonuses.res}}" data-dtype="Number"/>
+      </div>
+      <div class="stat-block">
+        <label>Mov</label>
+        <input type="number" name="system.statBonuses.mov" value="{{system.statBonuses.mov}}" data-dtype="Number"/>
+      </div>
+    </div>
+
+    {{!-- Weapon Proficiency --}}
+    <h3>Weapon Proficiency</h3>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <label>Sword</label>
+        <select name="system.weaponProficiency.sword">
+          {{#select system.weaponProficiency.sword}}
+          <option value="-">-</option>
+          <option value="E">E</option>
+          <option value="D">D</option>
+          <option value="C">C</option>
+          <option value="B">B</option>
+          <option value="A">A</option>
+          <option value="S">S</option>
+          {{/select}}
+        </select>
+      </div>
+      <div class="stat-block">
+        <label>Lance</label>
+        <select name="system.weaponProficiency.lance">
+          {{#select system.weaponProficiency.lance}}
+          <option value="-">-</option>
+          <option value="E">E</option>
+          <option value="D">D</option>
+          <option value="C">C</option>
+          <option value="B">B</option>
+          <option value="A">A</option>
+          <option value="S">S</option>
+          {{/select}}
+        </select>
+      </div>
+      <div class="stat-block">
+        <label>Axe</label>
+        <select name="system.weaponProficiency.axe">
+          {{#select system.weaponProficiency.axe}}
+          <option value="-">-</option>
+          <option value="E">E</option>
+          <option value="D">D</option>
+          <option value="C">C</option>
+          <option value="B">B</option>
+          <option value="A">A</option>
+          <option value="S">S</option>
+          {{/select}}
+        </select>
+      </div>
+      <div class="stat-block">
+        <label>Bow</label>
+        <select name="system.weaponProficiency.bow">
+          {{#select system.weaponProficiency.bow}}
+          <option value="-">-</option>
+          <option value="E">E</option>
+          <option value="D">D</option>
+          <option value="C">C</option>
+          <option value="B">B</option>
+          <option value="A">A</option>
+          <option value="S">S</option>
+          {{/select}}
+        </select>
+      </div>
+      <div class="stat-block">
+        <label>Tome</label>
+        <select name="system.weaponProficiency.tome">
+          {{#select system.weaponProficiency.tome}}
+          <option value="-">-</option>
+          <option value="E">E</option>
+          <option value="D">D</option>
+          <option value="C">C</option>
+          <option value="B">B</option>
+          <option value="A">A</option>
+          <option value="S">S</option>
+          {{/select}}
+        </select>
+      </div>
+      <div class="stat-block">
+        <label>Staff</label>
+        <select name="system.weaponProficiency.staff">
+          {{#select system.weaponProficiency.staff}}
+          <option value="-">-</option>
+          <option value="E">E</option>
+          <option value="D">D</option>
+          <option value="C">C</option>
+          <option value="B">B</option>
+          <option value="A">A</option>
+          <option value="S">S</option>
+          {{/select}}
+        </select>
+      </div>
+    </div>
+
+    {{!-- Description --}}
+    <div class="form-group">
+      <label>{{localize "EMBLEM.Description"}}</label>
+      {{editor enrichedDescription target="system.description" button=true owner=owner editable=editable}}
+    </div>
+
+  </section>
+</form>

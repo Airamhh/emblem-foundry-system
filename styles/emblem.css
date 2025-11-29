@@ -1,0 +1,2255 @@
+/**
+ * Emblem System - Main Stylesheet
+ * Inspired by Tidy 5e Sheets
+ * ALL STYLES SCOPED TO .emblem TO AVOID BREAKING FOUNDRY
+ */
+
+/* ========================================
+   CSS Variables
+   ======================================== */
+
+:root {
+  /* Font families */
+  --fe-signika: "Signika", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
+  /* Colors - Light Theme */
+  --fe-primary-font: rgba(0, 0, 0, 0.9);
+  --fe-background: rgba(236, 233, 223, 1);
+  --fe-faintest-color: rgba(0, 0, 0, 0.05);
+  --fe-faint-color: rgba(0, 0, 0, 0.1);
+  --fe-light-color: rgba(0, 0, 0, 0.25);
+  --fe-primary-color: rgba(0, 0, 0, 0.9);
+  --fe-secondary-color: rgba(0, 0, 0, 0.65);
+  --fe-tertiary-color: rgba(0, 0, 0, 0.4);
+  
+  /* Accent colors - Emblem themed */
+  --fe-primary-accent: rgba(139, 0, 0, 1); /* Dark Red */
+  --fe-secondary-accent: rgba(192, 168, 120, 1); /* Gold */
+  --fe-warning-accent: rgba(255, 0, 0, 0.6);
+  --fe-success-accent: rgba(50, 205, 50, 0.6);
+  
+  /* Header */
+  --fe-header-background: rgba(255, 255, 255, 0.2);
+  --fe-header-border: rgba(0, 0, 0, 0.25);
+  
+  /* Inputs and controls */
+  --fe-input-background: rgba(0, 0, 0, 0.1);
+  --fe-input-border: rgba(0, 0, 0, 0.25);
+  --fe-input-focus-border: rgba(139, 0, 0, 0.8);
+  
+  /* Shadows */
+  --fe-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --fe-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.15);
+  --fe-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --fe-shadow-inset: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Global Styles
+   ======================================== */
+
+/* Window Header - Asegurar que el texto sea visible */
+.emblem.sheet .window-header,
+.emblem.app .window-header {
+  color: #fff !important;
+}
+
+.emblem.sheet .window-header .window-title,
+.emblem.app .window-header .window-title {
+  color: #fff !important;
+}
+
+.emblem.sheet .window-header a,
+.emblem.app .window-header a {
+  color: #fff !important;
+}
+
+.emblem {
+  font-family: var(--fe-signika);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fe-primary-font);
+}
+
+.emblem.sheet {
+  min-width: 680px;
+  min-height: 500px;
+}
+
+.emblem.sheet .window-content {
+  background: var(--fe-background);
+  overflow: hidden;
+  padding: 0;
+}
+
+.emblem.sheet .window-content form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Global focus styles for accessibility */
+.emblem *:focus-visible {
+  outline: 2px solid var(--fe-primary-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Smooth transitions for interactive elements */
+.emblem a,
+.emblem button,
+.emblem input,
+.emblem select,
+.emblem textarea {
+  transition: all 0.2s ease;
+}
+
+/* Selection color */
+.emblem ::selection {
+  background: var(--fe-primary-accent);
+  color: white;
+}
+
+/* ========================================
+   Layout Utilities
+   ======================================== */
+
+.emblem .flexcol,
+.emblem.flexcol {
+  display: flex;
+  flex-direction: column;
+}
+
+.emblem .flexrow,
+.emblem.flexrow,
+.emblem .flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.emblem .flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emblem .header-fields .flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.emblem .header-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+/* ========================================
+   Sheet Header
+   ======================================== */
+
+.emblem .sheet-header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--fe-header-border);
+  background: var(--fe-header-background);
+  box-shadow: var(--fe-shadow-md);
+  flex: 0 0 auto;
+}
+
+.emblem .sheet-header .header-portrait {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emblem .sheet-header .profile-img {
+  width: 100px;
+  height: 100px;
+  border: 3px solid var(--fe-light-color);
+  border-radius: 8px;
+  cursor: pointer;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  box-shadow: var(--fe-shadow-lg);
+  position: relative;
+}
+
+.emblem .sheet-header .profile-img:hover {
+  border-color: var(--fe-primary-accent);
+  box-shadow: 0 0 16px rgba(139, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.emblem .sheet-header .profile-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.emblem .sheet-header .profile-img:hover::after {
+  opacity: 1;
+}
+
+/* HP Bar debajo del token */
+.emblem .hp-bar-container {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.emblem .hp-bar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.emblem .hp-bar-header .hp-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fe-primary-font);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.emblem .hp-bar-wrapper {
+  height: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.emblem .hp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(50, 205, 50, 0.9) 0%, 
+    rgba(34, 139, 34, 0.9) 100%);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(50, 205, 50, 0.6);
+  position: relative;
+}
+
+.emblem .hp-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.4) 0%, 
+    transparent 100%);
+  border-radius: 6px 6px 0 0;
+}
+
+.emblem .sheet-header .header-fields {
+  flex: 1;
+  display: grid;
+  gap: 12px;
+}
+
+.emblem .sheet-header .charname {
+  margin-bottom: 4px;
+}
+
+.emblem .sheet-header .charname input {
+  font-size: 26px;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--fe-primary-font);
+  width: 100%;
+  transition: all 0.2s ease;
+  padding: 4px 0;
+  letter-spacing: 0.5px;
+}
+
+.emblem .sheet-header .charname input:focus {
+  border-bottom-color: var(--fe-primary-accent);
+  outline: none;
+  background: rgba(139, 0, 0, 0.02);
+}
+
+.emblem .sheet-header .charname input:hover:not(:focus) {
+  border-bottom-color: var(--fe-light-color);
+}
+
+/* ========================================
+   Stat Blocks
+   ======================================== */
+
+.emblem .stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  background: var(--fe-faintest-color);
+  border: 1px solid var(--fe-light-color);
+  border-radius: 6px;
+  min-width: 90px;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: var(--fe-shadow-sm);
+}
+
+.emblem .stat-block:hover {
+  background: var(--fe-faint-color);
+  box-shadow: var(--fe-shadow-md);
+  border-color: var(--fe-secondary-color);
+  transform: translateY(-2px);
+}
+
+.emblem .stat-block label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--fe-tertiary-color);
+  margin-bottom: 4px;
+}
+
+.emblem .stat-block input {
+  width: 60px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  background: var(--fe-input-background);
+  border: 1px solid var(--fe-input-border);
+  border-radius: 3px;
+  color: var(--fe-primary-font);
+  padding: 6px 4px;
+  transition: all 0.2s ease;
+}
+
+.emblem .stat-block input:hover:not(:disabled) {
+  border-color: var(--fe-secondary-color);
+}
+
+.emblem .stat-block input:focus {
+  outline: none;
+  border-color: var(--fe-input-focus-border);
+  box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.emblem .stat-block input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.emblem .stat-block .stat-max {
+  font-size: 11px;
+  color: var(--fe-tertiary-color);
+  margin-top: 2px;
+}
+
+.emblem .stat-block button {
+  padding: 6px 14px;
+  background: var(--fe-primary-accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: var(--fe-shadow-sm);
+}
+
+.emblem .stat-block button:hover:not(:disabled) {
+  background: rgba(165, 42, 42, 1);
+  box-shadow: var(--fe-shadow-md);
+  transform: translateY(-1px);
+}
+
+.emblem .stat-block button:disabled {
+  background: var(--fe-faint-color);
+  color: var(--fe-tertiary-color);
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.emblem .stat-block button.level-up {
+  border: none;
+}
+
+/* Weapon Triangle */
+.emblem .weapon-triangle {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--fe-faintest-color);
+  border: 1px solid var(--fe-light-color);
+  border-radius: 8px;
+}
+
+.emblem .weapon-triangle .triangle-physical,
+.emblem .weapon-triangle .triangle-magic {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emblem .weapon-triangle .triangle-title {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--fe-secondary-color);
+  text-align: center;
+}
+
+.emblem .weapon-triangle .triangle-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+}
+
+.emblem .weapon-triangle .weapon-advantage {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.emblem .weapon-triangle .weapon-advantage.sword {
+  background: rgba(192, 192, 192, 0.3);
+  color: rgba(105, 105, 105, 1);
+  border: 1px solid rgba(105, 105, 105, 0.5);
+}
+
+.emblem .weapon-triangle .weapon-advantage.lance {
+  background: rgba(70, 130, 180, 0.3);
+  color: rgba(70, 130, 180, 1);
+  border: 1px solid rgba(70, 130, 180, 0.5);
+}
+
+.emblem .weapon-triangle .weapon-advantage.axe {
+  background: rgba(34, 139, 34, 0.3);
+  color: rgba(34, 139, 34, 1);
+  border: 1px solid rgba(34, 139, 34, 0.5);
+}
+
+.emblem .weapon-triangle .weapon-advantage.anima {
+  background: rgba(50, 205, 50, 0.3);
+  color: rgba(34, 139, 34, 1);
+  border: 1px solid rgba(34, 139, 34, 0.5);
+}
+
+.emblem .weapon-triangle .weapon-advantage.light {
+  background: rgba(255, 215, 0, 0.3);
+  color: rgba(184, 134, 11, 1);
+  border: 1px solid rgba(184, 134, 11, 0.5);
+}
+
+.emblem .weapon-triangle .weapon-advantage.dark {
+  background: rgba(75, 0, 130, 0.3);
+  color: rgba(75, 0, 130, 1);
+  border: 1px solid rgba(75, 0, 130, 0.5);
+}
+
+.emblem .weapon-triangle .arrow {
+  font-size: 14px;
+  color: var(--fe-tertiary-color);
+  font-weight: 700;
+}
+
+.emblem .stat-block button:active {
+  transform: translateY(0);
+  box-shadow: var(--fe-shadow-sm);
+}
+
+/* ========================================
+   Sheet Tabs
+   ======================================== */
+
+.emblem .sheet-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--fe-light-color);
+  background: linear-gradient(to bottom, var(--fe-faintest-color), transparent);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  gap: 2px;
+  flex: 0 0 auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.emblem .sheet-tabs .item {
+  flex: 1;
+  text-align: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: var(--fe-secondary-color);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  background: transparent;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.emblem .sheet-tabs .item::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: var(--fe-primary-accent);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.emblem .sheet-tabs .item:hover:not(.active) {
+  background: var(--fe-faint-color);
+  color: var(--fe-primary-color);
+}
+
+.emblem .sheet-tabs .item:hover:not(.active)::before {
+  width: 40%;
+  background: var(--fe-secondary-color);
+}
+
+.emblem .sheet-tabs .item:active {
+  transform: translateY(1px);
+}
+
+.emblem .sheet-tabs .item.active {
+  color: var(--fe-primary-accent);
+  background: rgba(139, 0, 0, 0.03);
+  font-weight: 600;
+}
+
+.emblem .sheet-tabs .item.active::before {
+  width: 100%;
+}
+
+/* ========================================
+   Sheet Body
+   ======================================== */
+
+.emblem .sheet-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  scroll-behavior: smooth;
+  background: var(--fe-background);
+}
+
+.emblem .sheet-body .tab {
+  display: none;
+}
+
+.emblem .sheet-body .tab.active {
+  display: block;
+}
+
+.emblem .sheet-body h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fe-primary-font);
+  border-bottom: 2px solid var(--fe-faint-color);
+  padding-bottom: 8px;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.emblem .sheet-body h3::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: var(--fe-primary-accent);
+  border-radius: 2px;
+}
+
+.emblem .sheet-body h3::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, var(--fe-faint-color), transparent);
+}
+
+.emblem .sheet-body h3:first-child {
+  margin-top: 0;
+}
+
+/* ========================================
+   Stats Grid
+   ======================================== */
+
+.emblem .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 4px;
+}
+
+.emblem .stats-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 4px;
+}
+
+.emblem .stats-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 4px;
+}
+
+/* ========================================
+   Weapon Triangle
+   ======================================== */
+
+.emblem .weapon-triangle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--fe-faintest-color);
+  border-radius: 8px;
+  border: 1px solid var(--fe-light-color);
+}
+
+.emblem .triangle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emblem .triangle-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--fe-secondary-color);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.emblem .triangle-shape {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  margin: 0 auto;
+}
+
+.emblem .triangle-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.emblem .triangle-vertex {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+  background: var(--fe-background);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--fe-light-color);
+  box-shadow: var(--fe-shadow-md);
+}
+
+.emblem .triangle-vertex.top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.emblem .triangle-vertex.left {
+  bottom: 0;
+  left: 0;
+}
+
+.emblem .triangle-vertex.right {
+  bottom: 0;
+  right: 0;
+}
+
+.emblem .weapon-triangle-icon {
+  font-size: 20px;
+  color: #000000;
+}
+
+/* Magic tome icons with colors */
+.emblem .triangle-vertex.magic-anima .weapon-triangle-icon {
+  color: #32cd32;
+  filter: drop-shadow(0 0 3px rgba(50, 205, 50, 0.6));
+}
+
+.emblem .triangle-vertex.magic-light .weapon-triangle-icon {
+  color: #ffd700;
+  filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.6));
+}
+
+.emblem .triangle-vertex.magic-dark .weapon-triangle-icon {
+  color: #4b0082;
+  filter: drop-shadow(0 0 3px rgba(75, 0, 130, 0.6));
+}
+
+.emblem .triangle-vertex span {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--fe-secondary-color);
+}
+
+/* ========================================
+   Items List
+   ======================================== */
+
+.emblem .items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Item Table Wrapper */
+.emblem .item-table-wrapper {
+  margin-bottom: 16px;
+}
+
+.emblem .item-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 3px;
+  font-size: 13px;
+}
+
+/* Item Table Header */
+.emblem .item-table thead tr.item-table-header {
+  background: rgba(0, 0, 0, 0.01);
+  border-radius: 3px;
+}
+
+.emblem .item-table th {
+  padding: 6px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  border: none;
+}
+
+.emblem .item-table th.header-name {
+  text-align: left;
+  border-radius: 3px 0 0 3px;
+}
+
+.emblem .item-table th.header-uses {
+  text-align: center;
+  width: 100px;
+}
+
+.emblem .item-table th.header-actions {
+  text-align: right;
+  width: 120px;
+  border-radius: 0 3px 3px 0;
+}
+
+.emblem .item-table tbody tr.item-table-row {
+  background: #f8f8f8;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 3px;
+}
+
+.emblem .item-table tbody tr.item-table-row td {
+  padding: 8px;
+  border: none;
+}
+
+.emblem .item-table tbody tr.item-table-row td:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.emblem .item-table tbody tr.item-table-row td:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.emblem .item-table tbody tr.item-table-row:hover {
+  background: #e8e8e8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Borde SOLO para equipped */
+.emblem .item-table tbody tr.item-table-row.equipped {
+  background: #e8f5e9;
+  border: 2px solid #66bb6a;
+  box-shadow: 0 0 0 1px #66bb6a;
+}
+
+.emblem .item-table tbody tr.item-table-row.equipped:hover {
+  background: #dcedc8;
+  border-color: #4caf50;
+  box-shadow: 0 1px 3px rgba(76, 175, 80, 0.3), 0 0 0 1px #4caf50;
+}
+
+/* Item Name Cell */
+.emblem .item-table td.item-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Item Image  */
+.emblem .item-table .item-image {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emblem .item-table .item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.emblem .item-table .item-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* Item Uses Cell */
+.emblem .item-table td.item-uses-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.emblem .item-table .uses-display {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+/* Item Description Cell */
+.emblem .item-table td.item-description-cell {
+  text-align: left;
+  vertical-align: middle;
+  padding: 8px;
+}
+
+.emblem .item-table .item-description {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.emblem .item-table .uses-current {
+  color: #4caf50;
+}
+
+.emblem .item-table tr.equipped .uses-current {
+  color: #2e7d32;
+}
+
+.emblem .item-table .uses-separator {
+  color: #999;
+}
+
+.emblem .item-table .uses-max {
+  color: #666;
+}
+
+/* Uses Bar */
+.emblem .item-table .uses-bar {
+  width: 80px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.emblem .item-table .uses-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #66bb6a 0%, #81c784 100%);
+  transition: width 0.3s ease;
+}
+
+.emblem .item-table tr.equipped .uses-bar-fill {
+  background: linear-gradient(90deg, #2e7d32 0%, #388e3c 100%);
+}
+
+/* Item Actions Cell */
+.emblem .item-table td.item-actions-cell {
+  text-align: right;
+  vertical-align: middle;
+}
+
+.emblem .item-table .item-actions-cell {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.emblem .item-table .item-actions-cell a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #666;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.15s ease;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.emblem .item-table .item-actions-cell a:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+
+.emblem .item-table .item-actions-cell a.item-equip {
+  color: #999;
+}
+
+.emblem .item-table tr.equipped .item-actions-cell a.item-equip {
+  color: #28a745;
+  background: rgba(40, 167, 69, 0.1);
+  border-color: rgba(40, 167, 69, 0.2);
+}
+
+.emblem .item-table .item-actions-cell a.item-equip:hover {
+  color: #28a745;
+  background: rgba(40, 167, 69, 0.2);
+  border-color: #28a745;
+}
+
+.emblem .item-table .item-actions-cell a.item-edit:hover {
+  color: #007bff;
+  border-color: #007bff;
+  background: rgba(0, 123, 255, 0.1);
+}
+
+.emblem .item-table .item-actions-cell a.item-delete:hover {
+  color: #dc3545;
+  border-color: #dc3545;
+  background: rgba(220, 53, 69, 0.1);
+}
+
+/* Item rows with flexrow class */
+.emblem .items-list .item.flexrow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+.emblem button,
+.emblem .button {
+  padding: 8px 16px;
+  background: var(--fe-secondary-color);
+  color: var(--fe-background);
+  border: 1px solid var(--fe-light-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: var(--fe-shadow-sm);
+  font-family: var(--fe-signika);
+}
+
+.emblem button:hover:not(:disabled),
+.emblem .button:hover:not(:disabled) {
+  background: var(--fe-primary-color);
+  border-color: var(--fe-secondary-color);
+  box-shadow: var(--fe-shadow-md);
+  transform: translateY(-1px);
+}
+
+.emblem button:active:not(:disabled),
+.emblem .button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--fe-shadow-sm);
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.emblem button:focus:not(:disabled),
+.emblem .button:focus:not(:disabled) {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--fe-primary-accent);
+}
+
+.emblem button:disabled,
+.emblem .button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ========================================
+   Inputs
+   ======================================== */
+
+.emblem input[type="text"],
+.emblem input[type="number"],
+.emblem textarea,
+.emblem select {
+  background: var(--fe-input-background);
+  border: 1px solid var(--fe-input-border);
+  border-radius: 3px;
+  color: var(--fe-primary-font);
+  padding: 4px 8px;
+  transition: all 0.2s ease;
+  font-family: var(--fe-signika);
+}
+
+.emblem input[type="text"]:hover:not(:focus),
+.emblem input[type="number"]:hover:not(:focus),
+.emblem textarea:hover:not(:focus),
+.emblem select:hover:not(:focus) {
+  border-color: var(--fe-secondary-color);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.emblem input[type="text"]:focus,
+.emblem input[type="number"]:focus,
+.emblem textarea:focus,
+.emblem select:focus {
+  outline: none;
+  border-color: var(--fe-input-focus-border);
+  box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.emblem input[type="text"]:active,
+.emblem input[type="number"]:active {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.emblem textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* ========================================
+   Editor Content
+   ======================================== */
+
+.emblem .editor-content {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--fe-light-color);
+  border-radius: 6px;
+  padding: 12px;
+  min-height: 200px;
+}
+
+/* ========================================
+   Section Headings & Labels
+   ======================================== */
+
+.emblem label {
+  font-weight: 500;
+  color: var(--fe-secondary-color);
+}
+
+.emblem .items-header,
+.emblem .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--fe-faint-color);
+  border: 1px solid var(--fe-light-color);
+  border-radius: 5px 5px 0 0;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--fe-secondary-color);
+  margin-bottom: -1px;
+}
+
+/* ========================================
+   Scrollbar
+   ======================================== */
+
+.emblem ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.emblem ::-webkit-scrollbar-track {
+  background: var(--fe-faintest-color);
+  border-radius: 5px;
+}
+
+.emblem ::-webkit-scrollbar-thumb {
+  background: var(--fe-light-color);
+  border-radius: 5px;
+  border: 2px solid var(--fe-faintest-color);
+  transition: background 0.2s ease;
+}
+
+.emblem ::-webkit-scrollbar-thumb:hover {
+  background: var(--fe-secondary-color);
+}
+
+.emblem ::-webkit-scrollbar-thumb:active {
+  background: var(--fe-primary-color);
+}
+
+/* ========================================
+   Combat Preview
+   ======================================== */
+
+.emblem.combat-preview {
+  min-width: 600px;
+  background: var(--fe-background);
+}
+
+.emblem.combat-preview .window-header {
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.emblem.combat-preview .combat-layout {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: var(--fe-faintest-color);
+}
+
+.emblem.combat-preview .combatant {
+  flex: 1;
+  text-align: center;
+  padding: 16px;
+  background: var(--fe-background);
+  border-radius: 8px;
+  box-shadow: var(--fe-shadow-md);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Advantage Animation */
+.emblem.combat-preview .combatant.has-advantage {
+  animation: advantageGlow 2s ease-in-out infinite;
+}
+
+@keyframes advantageGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.4);
+  }
+}
+
+.emblem.combat-preview .advantage-indicator {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.95), rgba(255, 165, 0, 0.95));
+  color: rgba(139, 69, 19, 1);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 10;
+}
+
+.emblem.combat-preview .advantage-indicator i {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.emblem.combat-preview .combatant.attacker {
+  box-shadow: 0 2px 8px rgba(65, 105, 225, 0.2);
+}
+
+.emblem.combat-preview .combatant.attacker:hover {
+  box-shadow: 0 4px 16px rgba(65, 105, 225, 0.3);
+  transform: translateY(-2px);
+}
+
+.emblem.combat-preview .combatant.defender {
+  box-shadow: 0 2px 8px rgba(220, 20, 60, 0.2);
+}
+
+.emblem.combat-preview .combatant.defender:hover {
+  box-shadow: 0 4px 16px rgba(220, 20, 60, 0.3);
+  transform: translateY(-2px);
+}
+
+.emblem.combat-preview .combatant-portrait {
+  margin: 0 auto 15px;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.emblem.combat-preview .combatant-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: none;
+  box-shadow: var(--fe-shadow-md);
+}
+
+.emblem.combat-preview .combatant-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--fe-primary-font);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.emblem.combat-preview .weapon-info {
+  font-size: 12px;
+  color: var(--fe-tertiary-color);
+  margin-bottom: 12px;
+  padding: 4px 8px;
+  background: var(--fe-faint-color);
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* Weapon Type Icons */
+.emblem.combat-preview .weapon-icon {
+  font-size: 16px;
+  margin-right: 6px;
+}
+
+/* Physical weapons - always black */
+.emblem.combat-preview .weapon-icon.weapon-physical {
+  color: #000000;
+}
+
+/* Magic tomes - colored by element */
+.emblem.combat-preview .weapon-icon.weapon-anima {
+  color: #32cd32;
+  filter: drop-shadow(0 0 3px rgba(50, 205, 50, 0.6));
+}
+
+.emblem.combat-preview .weapon-icon.weapon-light {
+  color: #ffd700;
+  filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.6));
+}
+
+.emblem.combat-preview .weapon-icon.weapon-dark {
+  color: #4b0082;
+  filter: drop-shadow(0 0 3px rgba(75, 0, 130, 0.6));
+}
+
+.emblem.combat-preview .weapon-icon.weapon-staff {
+  color: #ff69b4;
+}
+
+.emblem.combat-preview .combat-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.emblem.combat-preview .combat-stat {
+  padding: 10px 8px;
+  background: var(--fe-faint-color);
+  border: 1px solid var(--fe-light-color);
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.emblem.combat-preview .combat-stat:hover {
+  background: var(--fe-input-background);
+  box-shadow: var(--fe-shadow-sm);
+}
+
+.emblem.combat-preview .combat-stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--fe-tertiary-color);
+  font-weight: 600;
+}
+
+.emblem.combat-preview .combat-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+  color: var(--fe-primary-font);
+}
+
+.emblem.combat-preview .vs-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--fe-secondary-color);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.emblem.combat-preview .combat-preview-actions {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border-top: 1px solid var(--fe-light-color);
+  background: var(--fe-faintest-color);
+}
+
+.emblem.combat-preview .combat-preview-actions button {
+  flex: 1;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.emblem.combat-preview .combat-preview-actions button.confirm-combat {
+  background: var(--fe-primary-accent);
+  border-color: var(--fe-primary-accent);
+  color: white;
+}
+
+.emblem.combat-preview .combat-preview-actions button.confirm-combat:hover {
+  background: rgba(165, 42, 42, 1);
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+}
+
+/* HP Bar */
+.emblem.combat-preview .combatant-hp {
+  margin: 10px 0;
+}
+
+.emblem.combat-preview .hp-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fe-secondary-color);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.emblem.combat-preview .hp-bar {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: var(--fe-faint-color);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--fe-shadow-inset);
+  border: 1px solid var(--fe-light-color);
+}
+
+.emblem.combat-preview .hp-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(50, 205, 50, 0.9) 0%, 
+    rgba(34, 139, 34, 1) 100%);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+  z-index: 3;
+}
+
+.emblem.combat-preview .hp-bar-projected {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(255, 50, 50, 0.9) 0%, 
+    rgba(220, 20, 60, 1) 100%);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 50, 50, 0.8);
+  z-index: 2;
+  animation: fe-damage-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes fe-damage-pulse {
+  0%, 100% { 
+    opacity: 0.9;
+    box-shadow: 0 0 15px rgba(255, 50, 50, 0.8), inset 0 0 10px rgba(255, 100, 100, 0.4);
+  }
+  50% { 
+    opacity: 1;
+    box-shadow: 0 0 25px rgba(255, 50, 50, 1), 0 0 35px rgba(255, 0, 0, 0.6), inset 0 0 15px rgba(255, 150, 150, 0.6);
+  }
+}
+
+.emblem.combat-preview .hp-projection {
+  margin-left: 0.5rem;
+  color: var(--fe-accent-color);
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+.emblem.combat-preview .hp-bar-fill[style*="width: 0%"],
+.emblem.combat-preview .hp-bar-fill[style*="width: 1%"],
+.emblem.combat-preview .hp-bar-fill[style*="width: 2%"] {
+  background: linear-gradient(90deg, 
+    rgba(220, 20, 60, 0.8) 0%, 
+    rgba(139, 0, 0, 0.9) 100%);
+  box-shadow: 0 0 8px rgba(220, 20, 60, 0.5);
+}
+
+/* Combat Stats rows */
+.emblem.combat-preview .stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: var(--fe-faint-color);
+  border: 1px solid var(--fe-light-color);
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.emblem.combat-preview .stat-row:last-child {
+  margin-bottom: 0;
+}
+
+.emblem.combat-preview .stat-row .stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--fe-tertiary-color);
+  letter-spacing: 0.5px;
+}
+
+.emblem.combat-preview .stat-row .stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fe-primary-font);
+}
+
+.emblem.combat-preview .stat-row .stat-value.hit {
+  color: rgba(65, 105, 225, 0.9);
+}
+
+.emblem.combat-preview .stat-row .stat-value.damage {
+  color: rgba(220, 20, 60, 0.9);
+}
+
+.emblem.combat-preview .stat-row .stat-value.crit {
+  color: rgba(255, 140, 0, 0.9);
+}
+
+/* Doubles indicator */
+.emblem.combat-preview .doubles-indicator {
+  margin-top: 8px;
+  padding: 8px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.2));
+  border: 2px solid rgba(255, 165, 0, 0.5);
+  border-radius: 5px;
+  color: rgba(255, 140, 0, 1);
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 1px;
+  animation: fe-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes fe-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Cannot counter */
+.emblem.combat-preview .cannot-counter {
+  padding: 12px;
+  background: rgba(220, 20, 60, 0.1);
+  border: 2px solid rgba(220, 20, 60, 0.3);
+  border-radius: 5px;
+  color: rgba(220, 20, 60, 0.9);
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   Emblem Combat Cards (Chat Messages)
+   ======================================== */
+
+.fe-combat-card {
+  background: #ffffff;
+  border: 2px solid #d4c5b0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Signika', 'Helvetica', sans-serif;
+  margin: 8px 0;
+}
+
+/* Header */
+.fe-combat-header {
+  background: linear-gradient(135deg, #8b7355 0%, #a0826d 100%);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-bottom: 3px solid #6b5940;
+}
+
+.fe-combatant-left,
+.fe-combatant-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fe-token-portrait {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  object-fit: cover;
+}
+
+.fe-vs {
+  font-size: 15px;
+  font-weight: 900;
+  color: #1a1a1a;
+  letter-spacing: 2px;
+  padding: 5px 14px;
+  background: #ffd700;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Body */
+.fe-combat-body {
+  background: #f8f8f6;
+  padding: 14px;
+}
+
+/* Rounds */
+.fe-round {
+  background: #ffffff;
+  border-left: 4px solid #5b8fd8;
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.fe-round:last-child {
+  margin-bottom: 0;
+}
+
+.fe-round.fe-critical {
+  background: linear-gradient(135deg, #fffbf0 0%, #fff8e6 100%);
+  border-left: 4px solid #ff8c00;
+  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.25);
+  animation: fe-crit-pulse-chat 2s ease-in-out infinite;
+}
+
+.fe-round-number {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8b7355;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e8e6e3;
+}
+
+@keyframes fe-crit-pulse-chat {
+  0%, 100% { box-shadow: 0 2px 8px rgba(255, 140, 0, 0.25); }
+  50% { box-shadow: 0 4px 12px rgba(255, 140, 0, 0.4); }
+}
+
+.fe-round-header {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-weight: 600;
+}
+
+.fe-round-combatant {
+  display: flex;
+  align-items: center;
+}
+
+.fe-round-portrait {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.fe-attacker-label {
+  color: #3b5998;
+}
+
+.fe-defender-label {
+  color: #c53030;
+}
+
+.fe-arrow {
+  color: #999;
+  font-weight: 400;
+}
+
+.fe-weapon {
+  margin-left: auto;
+  font-size: 12px;
+  color: #666;
+  background: #f0ebe0;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.fe-weapon-uses {
+  font-size: 10px;
+  color: #999;
+  margin-left: 4px;
+}
+
+/* Roll Results */
+.fe-roll-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.fe-hit-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  min-height: 80px;
+}
+
+.fe-roll-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fe-roll-die {
+  font-size: 26px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 5px;
+  min-width: 50px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.fe-roll-die.fe-success {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: #fff;
+}
+
+.fe-roll-die.fe-fail {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: #fff;
+}
+
+.fe-roll-target {
+  font-size: 12px;
+  color: #888;
+  font-weight: 600;
+}
+
+/* Damage */
+.fe-damage-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fee;
+  padding: 12px;
+  border-radius: 6px;
+  border: 2px solid #fcc;
+  min-height: 80px;
+}
+
+.fe-damage-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c53030;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fe-damage-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #c53030;
+  line-height: 1;
+}
+
+/* Critical */
+.fe-damage-roll.fe-crit {
+  background: linear-gradient(135deg, #fff9e6 0%, #ffe9b3 100%);
+  border: 2px solid #ff8c00;
+  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+  animation: fe-crit-glow-chat 1.5s ease-in-out infinite;
+}
+
+.fe-crit-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #d97706;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fe-damage-roll.fe-crit .fe-damage-value {
+  font-size: 36px;
+  color: #d97706;
+}
+
+@keyframes fe-crit-glow-chat {
+  0%, 100% { 
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+  }
+  50% { 
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.5);
+  }
+}
+
+/* Miss */
+.fe-miss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  border: 1px dashed #ccc;
+  color: #999;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-height: 80px;
+}
+
+/* HP Summary por ronda */
+.fe-round-hp-summary {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e8e6e3;
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.fe-round-hp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.fe-round-hp-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fe-round-hp-change {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.fe-round-hp-before {
+  color: #888;
+}
+
+.fe-round-hp-arrow {
+  color: #999;
+  font-weight: 400;
+}
+
+.fe-round-hp-after {
+  color: #48bb78;
+}
+
+.fe-round-hp-after.fe-defeated {
+  color: #e53e3e;
+}
+
+/* Footer */
+.fe-combat-footer {
+  background: linear-gradient(135deg, #f0ebe0 0%, #e8dfd0 100%);
+  padding: 18px;
+  border-top: 3px solid #d4c5b0;
+}
+
+.fe-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.fe-summary-combatant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fe-summary-combatant.fe-attacker {
+  border: 3px solid rgba(65, 105, 225, 0.6);
+}
+
+.fe-summary-combatant.fe-attacker .fe-combatant-label {
+  color: #4169e1;
+}
+
+.fe-summary-combatant.fe-defender {
+  border: 3px solid rgba(220, 20, 60, 0.6);
+}
+
+.fe-summary-combatant.fe-defender .fe-combatant-label {
+  color: #dc143c;
+}
+
+/* Disposition-based borders */
+.fe-summary-combatant.friendly,
+.combatant.friendly {
+  border: 3px solid rgba(65, 105, 225, 0.6) !important; /* Blue - Friendly */
+}
+
+.fe-summary-combatant.neutral,
+.combatant.neutral {
+  border: 3px solid rgba(40, 167, 69, 0.6) !important; /* Green - Neutral */
+}
+
+.fe-summary-combatant.hostile,
+.combatant.hostile {
+  border: 3px solid rgba(220, 20, 60, 0.6) !important; /* Red - Hostile */
+}
+
+.fe-summary-combatant.secret,
+.combatant.secret {
+  border: 3px solid rgba(138, 43, 226, 0.6) !important; /* Purple - Secret */
+}
+
+/* Round borders por disposition */
+.fe-round.friendly {
+  border-left-color: rgba(65, 105, 225, 0.6) !important;
+}
+
+.fe-round.neutral {
+  border-left-color: rgba(40, 167, 69, 0.6) !important;
+}
+
+.fe-round.hostile {
+  border-left-color: rgba(220, 20, 60, 0.6) !important;
+}
+
+.fe-round.secret {
+  border-left-color: rgba(138, 43, 226, 0.6) !important;
+}
+
+.fe-combatant-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8b7355;
+  margin-bottom: 4px;
+}
+
+.fe-summary-portrait {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fe-summary-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+}
+
+.fe-summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 6px;
+}
+
+.fe-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fe-stat-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.fe-damage-taken {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c53030;
+  margin-left: 4px;
+}
+
+.fe-weapon-durability {
+  font-size: 10px;
+  color: #999;
+  margin-left: 4px;
+}
+
+.fe-uses-used {
+  font-size: 10px;
+  font-weight: 700;
+  color: #e67e22;
+  margin-left: 4px;
+}
+
+/* Winner */
+.fe-winner {
+  text-align: center;
+  padding: 12px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  border: 2px solid #d4af37;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #6b4d00;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+  animation: fe-winner-glow 2s ease-in-out infinite;
+}
+
+@keyframes fe-winner-glow {
+  0%, 100% { 
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+  }
+  50% { 
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.6);
+  }
+}
+
+/* ==========================================
+   INTERACTIVE COMBAT STYLES (usa mismo estilo que combat-result)
+   ========================================== */
+
+.fe-combat-result.interactive {
+  background: #ffffff;
+  border: 2px solid #d4c5b0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Signika', 'Helvetica', sans-serif;
+  margin: 8px 0;
+}
+
+.fe-combat-result.interactive .fe-round.pending {
+  border-left-color: #f39c12;
+  box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+  animation: fe-pending-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fe-pending-pulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.5);
+  }
+}
+
+.fe-combat-result.interactive .fe-round-pending {
+  padding: 16px;
+  text-align: center;
+  background: #fffbf0;
+  border-top: 1px solid #e8e6e3;
+}
+
+.fe-combat-result.interactive .fe-roll-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #5b8fd8 0%, #4a7cc4 100%);
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(91, 143, 216, 0.4);
+}
+
+.fe-combat-result.interactive .fe-roll-button:hover {
+  background: linear-gradient(135deg, #4a7cc4 0%, #5b8fd8 100%);
+  box-shadow: 0 4px 12px rgba(91, 143, 216, 0.6);
+  transform: translateY(-2px);
+}
+
+.fe-combat-result.interactive .fe-roll-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(91, 143, 216, 0.4);
+}
+
+.fe-combat-result.interactive .fe-pending-indicator {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #8b7355;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fe-combat-result.interactive .fe-pending-indicator i {
+  animation: fe-spin 2s linear infinite;
+}
+
+@keyframes fe-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fe-combat-result.interactive .fe-round-result {
+  padding: 14px;
+}
+
+.fe-combat-result.interactive .fe-result-roll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+.fe-combat-result.interactive .fe-result-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.fe-combat-result.interactive .fe-result-status.hit {
+  background: #e6f7ed;
+  border: 2px solid #48bb78;
+  color: #38a169;
+}
+
+.fe-combat-result.interactive .fe-result-status.critical {
+  background: linear-gradient(135deg, #fff9e6 0%, #ffe9b3 100%);
+  border: 2px solid #ff8c00;
+  color: #d97706;
+  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+  animation: fe-critical-flash 0.5s ease;
+}
+
+@keyframes fe-critical-flash {
+  0%, 100% { 
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+  }
+  50% { 
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.5);
+  }
+}
+
+.fe-combat-result.interactive .fe-result-status.miss {
+  background: #fee;
+  border: 2px solid #f56565;
+  color: #c53030;
+}
+
+.fe-combat-result.interactive .fe-damage-value {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.fe-combat-result.interactive .fe-hp-change {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+.fe-combat-result.interactive .fe-hp-before {
+  color: #5b8fd8;
+  font-weight: 700;
+}
+
+.fe-combat-result.interactive .fe-hp-after {
+  color: #c53030;
+  font-weight: 700;
+}
+
+/* ==========================================
+   TOKEN WEAPON ICONS
+   ========================================== */
+
+.token-weapon-icon {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  font-size: 20px;
+  transition: all 0.2s ease;
+}
+
+.token-weapon-icon i {
+  display: block;
+  text-shadow: 
+    0 0 4px rgba(0, 0, 0, 0.8),
+    1px 1px 2px rgba(0, 0, 0, 1),
+    -1px -1px 2px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.8));
+}
+

@@ -1,0 +1,264 @@
+{{!-- 
+  Example Template - Using New SCSS Styles
+  This is an example showing how to use the new style system
+--}}
+
+<div class="emblem sheet actor character">
+  
+  {{!-- Header with Profile --}}
+  <header class="sheet-header">
+    <div class="profile-img">
+      <img src="{{actor.img}}" alt="{{actor.name}}" data-edit="img">
+    </div>
+    
+    <div class="fe-flex-1">
+      <div class="charname">
+        <input type="text" name="name" value="{{actor.name}}" placeholder="Character Name">
+      </div>
+      
+      <div class="class-info">
+        <span class="class-name">{{actor.system.class}}</span>
+      </div>
+    </div>
+
+    <div class="level-experience fe-flex fe-flex-col fe-gap-2">
+      <div class="level fe-text-center">
+        <span class="fe-text-sm fe-text-secondary">LVL</span>
+        <span class="fe-text-2xl fe-font-bold">{{actor.system.level}}</span>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Navigation Tabs --}}
+  <nav class="sheet-tabs" data-group="primary">
+    <a class="item" data-tab="stats">
+      <i class="fas fa-chart-bar"></i> {{localize "EMBLEM.Stats"}}
+    </a>
+    <a class="item" data-tab="inventory">
+      <i class="fas fa-backpack"></i> {{localize "EMBLEM.Inventory"}}
+    </a>
+    <a class="item" data-tab="skills">
+      <i class="fas fa-star"></i> {{localize "EMBLEM.Skills"}}
+    </a>
+    <a class="item" data-tab="biography">
+      <i class="fas fa-book"></i> {{localize "EMBLEM.Biography"}}
+    </a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    
+    {{!-- Stats Tab --}}
+    <div class="tab" data-group="primary" data-tab="stats">
+      
+      {{!-- HP Resource Bar --}}
+      <div class="resource hp fe-mb-4">
+        <label class="resource-label">{{localize "EMBLEM.HP"}}</label>
+        <div class="resource-content">
+          <div class="resource-value">
+            <input type="number" name="system.stats.hp.value" value="{{actor.system.stats.hp.value}}">
+            <span class="sep">/</span>
+            <span class="max">{{actor.system.stats.hp.max}}</span>
+          </div>
+          <div class="resource-bar">
+            <div class="bar-fill" style="width: {{divide actor.system.stats.hp.value actor.system.stats.hp.max}}%"></div>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Stats Grid --}}
+      <div class="stats-grid">
+        {{#each actor.system.stats as |stat key|}}
+          {{#unless (eq key "hp")}}
+            <div class="fe-stat-card fe-stat-card--{{key}}">
+              <div class="fe-stat-card__label">{{localize (concat "EMBLEM." (capitalize key))}}</div>
+              <div class="fe-stat-card__value">
+                <input type="number" name="system.stats.{{key}}.value" value="{{stat.value}}">
+              </div>
+              {{#if stat.bonus}}
+                <div class="fe-stat-card__bonus">+{{stat.bonus}}</div>
+              {{/if}}
+            </div>
+          {{/unless}}
+        {{/each}}
+      </div>
+
+      {{!-- Growth Rates --}}
+      <div class="fe-card fe-mt-6">
+        <div class="fe-card__header">
+          <h3 class="fe-card__title">
+            <i class="fas fa-seedling"></i> {{localize "EMBLEM.Growth"}}
+          </h3>
+        </div>
+        <div class="fe-card__body">
+          <div class="fe-grid fe-grid--5-cols">
+            {{#each actor.system.growth as |growth key|}}
+              <div class="fe-form-group">
+                <label class="fe-form-label">{{localize (concat "EMBLEM." (capitalize key))}}</label>
+                <div class="fe-input-group">
+                  <input type="number" class="fe-input" name="system.growth.{{key}}" value="{{growth}}">
+                  <span class="fe-input-addon">%</span>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{!-- Inventory Tab --}}
+    <div class="tab" data-group="primary" data-tab="inventory">
+      <div class="inventory-section">
+        
+        <div class="inventory-header">
+          <h3>
+            <i class="fas fa-swords"></i> {{localize "EMBLEM.Inventory"}}
+          </h3>
+          <button type="button" class="fe-button fe-button--primary fe-button--sm" data-action="create-item">
+            <i class="fas fa-plus"></i> Add Item
+          </button>
+        </div>
+
+        <ul class="items-list">
+          {{#each actor.items as |item|}}
+            <li class="item weapon-item {{#if item.system.equipped}}equipped{{/if}}" data-item-id="{{item.id}}">
+              
+              <div class="item-image">
+                <img src="{{item.img}}" alt="{{item.name}}">
+              </div>
+
+              <div class="item-name">
+                <a class="item-edit" data-action="edit-item">{{item.name}}</a>
+                {{#if item.system.weaponType}}
+                  <div class="fe-text-xs fe-text-secondary">{{item.system.weaponType}}</div>
+                {{/if}}
+              </div>
+
+              {{#if item.system.uses}}
+                <div class="item-durability {{#if (lt item.system.uses.value 10)}}low{{/if}}">
+                  <span class="current">{{item.system.uses.value}}</span>
+                  <span class="sep">/</span>
+                  <span class="max">{{item.system.uses.max}}</span>
+                </div>
+              {{/if}}
+
+              <div class="item-stats fe-flex fe-gap-2">
+                {{#if item.system.might}}
+                  <span class="stat-badge" title="Might">
+                    <i class="fas fa-fist-raised"></i> {{item.system.might}}
+                  </span>
+                {{/if}}
+                {{#if item.system.hit}}
+                  <span class="stat-badge" title="Hit">
+                    <i class="fas fa-bullseye"></i> {{item.system.hit}}
+                  </span>
+                {{/if}}
+              </div>
+
+              <div class="item-controls">
+                {{#if item.system.equipped}}
+                  <a class="item-control" data-action="unequip-item" title="Unequip">
+                    <i class="fas fa-shield-alt"></i>
+                  </a>
+                {{else}}
+                  <a class="item-control" data-action="equip-item" title="Equip">
+                    <i class="far fa-shield-alt"></i>
+                  </a>
+                {{/if}}
+                <a class="item-control" data-action="delete-item" title="Delete">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+    {{!-- Skills Tab --}}
+    <div class="tab" data-group="primary" data-tab="skills">
+      <div class="skills-section">
+        
+        <div class="skills-header">
+          <h3>
+            <i class="fas fa-star"></i> {{localize "EMBLEM.Skills"}}
+          </h3>
+          <button type="button" class="fe-button fe-button--secondary fe-button--sm" data-action="create-skill">
+            <i class="fas fa-plus"></i> Add Skill
+          </button>
+        </div>
+
+        <div class="fe-list-group">
+          {{#each actor.skills as |skill|}}
+            <div class="fe-list-group-item skill-item">
+              <div class="skill-icon">
+                <img src="{{skill.img}}" alt="{{skill.name}}">
+              </div>
+              <div class="skill-info">
+                <div class="skill-name">{{skill.name}}</div>
+                <div class="skill-description">{{skill.system.description}}</div>
+              </div>
+              <div class="skill-type">{{skill.system.type}}</div>
+              <div class="item-controls">
+                <a class="item-control" data-action="edit-skill" data-skill-id="{{skill.id}}">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a class="item-control" data-action="delete-skill" data-skill-id="{{skill.id}}">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    {{!-- Biography Tab --}}
+    <div class="tab" data-group="primary" data-tab="biography">
+      <div class="fe-card">
+        <div class="fe-card__header">
+          <h3 class="fe-card__title">
+            <i class="fas fa-book-open"></i> {{localize "EMBLEM.Biography"}}
+          </h3>
+          <button type="button" class="fe-button fe-button--sm fe-button--icon" data-action="edit-biography">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+        <div class="fe-card__body">
+          <div class="editor-content">
+            {{editor content=actor.system.biography target="system.biography" button=true owner=owner editable=editable}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  {{!-- Action Buttons Footer --}}
+  <footer class="fe-flex fe-gap-3 fe-p-4 fe-border-t">
+    <button type="button" class="fe-button fe-button--primary fe-flex-1" data-action="roll-check">
+      <i class="fas fa-dice-d20"></i> Roll Check
+    </button>
+    <button type="button" class="fe-button fe-button--secondary fe-flex-1" data-action="rest">
+      <i class="fas fa-bed"></i> Rest
+    </button>
+    <button type="button" class="fe-button fe-button--icon" data-action="sheet-settings">
+      <i class="fas fa-cog"></i>
+    </button>
+  </footer>
+
+</div>
+
+<style>
+/* Additional custom styles for this specific sheet if needed */
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  background: var(--fe-bg-tertiary);
+  border-radius: var(--fe-radius-base);
+  font-size: var(--fe-font-size-xs);
+  font-weight: var(--fe-font-weight-semibold);
+}
+</style>

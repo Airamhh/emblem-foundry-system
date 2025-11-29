@@ -1,0 +1,144 @@
+<div class="combat-preview">
+  <!-- Atacante -->
+  <div class="combatant {{attacker.disposition}} {{#if attacker.hasAdvantage}}has-advantage{{/if}}">
+    {{#if attacker.hasAdvantage}}
+    <div class="advantage-indicator">
+      <i class="fas fa-arrow-up"></i>
+      <span>ADVANTAGE</span>
+    </div>
+    {{/if}}
+    <div class="combatant-portrait">
+      <img src="{{attacker.img}}" alt="{{attacker.name}}" />
+    </div>
+    <div class="combatant-info">
+      <h3 class="combatant-name">{{attacker.name}}</h3>
+      <div class="combatant-hp">
+        <div class="hp-label">
+          <span>HP</span>
+          <span>{{attacker.hp}}/{{attacker.maxHp}}</span>
+          {{#if (eq attacker.projectedHP attacker.hp)}}
+          {{else}}
+          <span class="hp-projection">→ {{attacker.projectedHP}}</span>
+          {{/if}}
+        </div>
+        <div class="hp-bar">
+          <div class="hp-bar-projected" style="width: {{attacker.hpPercent}}%"></div>
+          <div class="hp-bar-fill" style="width: {{attacker.projectedHPPercent}}%"></div>
+        </div>
+      </div>
+      <div class="weapon-info">
+        {{#if attacker.isMagic}}
+        <i class="fas fa-book weapon-icon weapon-{{attacker.weaponType}}"></i>
+        {{else}}
+        <i class="fas {{attacker.weaponIcon}} weapon-icon weapon-physical"></i>
+        {{/if}}
+        <span class="weapon-name">{{attacker.weapon}}</span>
+        {{#if attacker.weaponUses}}
+        <span class="weapon-uses">({{attacker.weaponUses}}/{{attacker.weaponMaxUses}})</span>
+        {{/if}}
+      </div>
+      <div class="combat-stats">
+        <div class="stat-row">
+          <span class="stat-label">Hit</span>
+          <span class="stat-value hit">{{attacker.hit}}%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Dmg</span>
+          <span class="stat-value damage">{{attacker.damage}}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Crit</span>
+          <span class="stat-value crit">{{attacker.crit}}%</span>
+        </div>
+        {{#if attacker.doubles}}
+        <div class="doubles-indicator">
+          <i class="fas fa-bolt"></i> DOUBLE ATTACK
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  
+  <!-- VS Separator -->
+  <div class="vs-separator">
+    <span>VS</span>
+  </div>
+  
+  <!-- Defensor -->
+  <div class="combatant {{defender.disposition}} {{#if defender.hasAdvantage}}has-advantage{{/if}}">
+    {{#if defender.hasAdvantage}}
+    <div class="advantage-indicator">
+      <i class="fas fa-arrow-up"></i>
+      <span>ADVANTAGE</span>
+    </div>
+    {{/if}}
+    <div class="combatant-portrait">
+      <img src="{{defender.img}}" alt="{{defender.name}}" />
+    </div>
+    <div class="combatant-info">
+      <h3 class="combatant-name">{{defender.name}}</h3>
+      <div class="combatant-hp">
+        <div class="hp-label">
+          <span>HP</span>
+          <span>{{defender.hp}}/{{defender.maxHp}}</span>
+          {{#if (eq defender.projectedHP defender.hp)}}
+          {{else}}
+          <span class="hp-projection">→ {{defender.projectedHP}}</span>
+          {{/if}}
+        </div>
+        <div class="hp-bar">
+          <div class="hp-bar-projected" style="width: {{defender.hpPercent}}%"></div>
+          <div class="hp-bar-fill" style="width: {{defender.projectedHPPercent}}%"></div>
+        </div>
+      </div>
+      <div class="weapon-info">
+        {{#if defender.isMagic}}
+        <i class="fas fa-book weapon-icon weapon-{{defender.weaponType}}"></i>
+        {{else}}
+        <i class="fas {{defender.weaponIcon}} weapon-icon weapon-physical"></i>
+        {{/if}}
+        <span class="weapon-name">{{defender.weapon}}</span>
+        {{#if defender.weaponUses}}
+        <span class="weapon-uses">({{defender.weaponUses}}/{{defender.weaponMaxUses}})</span>
+        {{/if}}
+      </div>
+      {{#if defender.canCounter}}
+      <div class="combat-stats">
+        <div class="stat-row">
+          <span class="stat-label">Hit</span>
+          <span class="stat-value hit">{{defender.hit}}%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Dmg</span>
+          <span class="stat-value damage">{{defender.damage}}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Crit</span>
+          <span class="stat-value crit">{{defender.crit}}%</span>
+        </div>
+        {{#if defender.doubles}}
+        <div class="doubles-indicator">
+          <i class="fas fa-bolt"></i> DOUBLE ATTACK
+        </div>
+        {{/if}}
+      </div>
+      {{else}}
+      <div class="combat-stats">
+        <div class="cannot-counter">
+          <i class="fas fa-ban"></i> Cannot Counter Attack
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<div class="combat-preview-actions">
+    <button class="confirm-combat" type="button">
+      <i class="fas fa-check"></i> Confirm Attack
+    </button>
+    <button class="cancel-combat" type="button">
+      <i class="fas fa-times"></i> Cancel
+    </button>
+  </div>
+</div>
