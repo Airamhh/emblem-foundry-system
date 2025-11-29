@@ -740,6 +740,21 @@
   filter: drop-shadow(0 0 3px rgba(75, 0, 130, 0.6));
 }
 
+.emblem .triangle-vertex.magic-thunder .weapon-triangle-icon {
+  color: #ffeb3b;
+  filter: drop-shadow(0 0 3px rgba(255, 235, 59, 0.6));
+}
+
+.emblem .triangle-vertex.magic-fire .weapon-triangle-icon {
+  color: #ff5722;
+  filter: drop-shadow(0 0 3px rgba(255, 87, 34, 0.6));
+}
+
+.emblem .triangle-vertex.magic-wind .weapon-triangle-icon {
+  color: #4caf50;
+  filter: drop-shadow(0 0 3px rgba(76, 175, 80, 0.6));
+}
+
 .emblem .triangle-vertex span {
   font-size: 10px;
   font-weight: 600;

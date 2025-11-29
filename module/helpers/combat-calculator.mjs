@@ -53,33 +53,75 @@ export class CombatCalculator {
 
   /**
    * Calculate weapon triangle advantage
-   * @param {string} attackerWeaponType - Weapon type of attacker
-   * @param {string} defenderWeaponType - Weapon type of defender
+   * Physical: sword > axe > lance > sword
+   * Magic Level 1: light > dark > anima > light
+   * Magic Level 2 (Anima): thunder > fire > wind > thunder
+   * @param {string} attackerType - Weapon/magic type of attacker
+   * @param {string} defenderType - Weapon/magic type of defender
    * @returns {object} {advantage: number, hitMod: number, damageMod: number}
    */
-  static getWeaponTriangleAdvantage(attackerWeaponType, defenderWeaponType) {
-    const triangle = {
+  static getWeaponTriangleAdvantage(attackerType, defenderType) {
+    // Physical weapon triangle
+    const physicalTriangle = {
       'sword': { beats: 'axe', losesTo: 'lance' },
       'lance': { beats: 'sword', losesTo: 'axe' },
       'axe': { beats: 'lance', losesTo: 'sword' }
     };
 
-    // Check if weapons are in triangle
-    if (!triangle[attackerWeaponType] || !triangle[defenderWeaponType]) {
+    // Magic triangle level 1 (main)
+    const magicTriangle = {
+      'light': { beats: 'dark', losesTo: 'anima' },
+      'dark': { beats: 'anima', losesTo: 'light' },
+      'anima': { beats: 'light', losesTo: 'dark' }
+    };
+
+    // Magic triangle level 2 (anima subtypes)
+    const animaTriangle = {
+      'thunder': { beats: 'fire', losesTo: 'wind' },
+      'fire': { beats: 'wind', losesTo: 'thunder' },
+      'wind': { beats: 'thunder', losesTo: 'fire' }
+    };
+
+    // Check physical triangle
+    if (physicalTriangle[attackerType] && physicalTriangle[defenderType]) {
+      if (physicalTriangle[attackerType].beats === defenderType) {
+        return { advantage: 1, hitMod: 15, damageMod: 1 };
+      }
+      if (physicalTriangle[attackerType].losesTo === defenderType) {
+        return { advantage: -1, hitMod: -15, damageMod: -1 };
+      }
       return { advantage: 0, hitMod: 0, damageMod: 0 };
     }
 
-    // Attacker has advantage
-    if (triangle[attackerWeaponType].beats === defenderWeaponType) {
-      return { advantage: 1, hitMod: 15, damageMod: 1 };
+    // Normalize anima subtypes to "anima" for level 1 comparison
+    const normalizedAttacker = ['fire', 'thunder', 'wind'].includes(attackerType) ? 'anima' : attackerType;
+    const normalizedDefender = ['fire', 'thunder', 'wind'].includes(defenderType) ? 'anima' : defenderType;
+
+    // Check magic triangle level 1 (light/dark vs anima)
+    if (magicTriangle[normalizedAttacker] && magicTriangle[normalizedDefender]) {
+      // If both are anima subtypes, check level 2 triangle
+      if (normalizedAttacker === 'anima' && normalizedDefender === 'anima' &&
+          animaTriangle[attackerType] && animaTriangle[defenderType]) {
+        if (animaTriangle[attackerType].beats === defenderType) {
+          return { advantage: 1, hitMod: 10, damageMod: 1 };
+        }
+        if (animaTriangle[attackerType].losesTo === defenderType) {
+          return { advantage: -1, hitMod: -10, damageMod: -1 };
+        }
+        return { advantage: 0, hitMod: 0, damageMod: 0 };
+      }
+
+      // Level 1 magic triangle
+      if (magicTriangle[normalizedAttacker].beats === normalizedDefender) {
+        return { advantage: 1, hitMod: 15, damageMod: 1 };
+      }
+      if (magicTriangle[normalizedAttacker].losesTo === normalizedDefender) {
+        return { advantage: -1, hitMod: -15, damageMod: -1 };
+      }
+      return { advantage: 0, hitMod: 0, damageMod: 0 };
     }
 
-    // Attacker has disadvantage
-    if (triangle[attackerWeaponType].losesTo === defenderWeaponType) {
-      return { advantage: -1, hitMod: -15, damageMod: -1 };
-    }
-
-    // No advantage
+    // No triangle advantage (physical vs magic, or invalid types)
     return { advantage: 0, hitMod: 0, damageMod: 0 };
   }
 

@@ -1,7 +1,7 @@
 {
   "id": "emblem",
   "title": "Emblem Tabletop System",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
